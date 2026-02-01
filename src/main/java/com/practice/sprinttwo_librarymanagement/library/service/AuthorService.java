@@ -13,11 +13,9 @@ import java.util.Optional;
 @Service
 public class AuthorService {
     private final AuthorRepository authorRepository;
-    private final BookService bookService;
 
-    public AuthorService(AuthorRepository authorRepository, BookService bookService){
+    public AuthorService(AuthorRepository authorRepository){
         this.authorRepository = authorRepository;
-        this.bookService = bookService;
     }
 
     @Transactional

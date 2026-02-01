@@ -36,8 +36,11 @@ public class BookController {
     }
 
     @GetMapping("/author/{authorId}")
-    public List<Book> getBooksByAuthor(@PathVariable Long authorId){
-        return bookService.getBooksByAuthor(authorId);
+    public List<BookResponse> getBooksByAuthor(@PathVariable Long authorId){
+        return bookService.getBooksByAuthor(authorId)
+                .stream()
+                .map(this::mapToBookResponse)
+                .toList();
     }
 
     @GetMapping("/search")
