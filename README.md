@@ -1,5 +1,5 @@
 # SPRINT TWO - Library Management System API
-## Project Duration: February 1, 2026 – February 2, 2026
+## Project Duration: February 1, 2026
 ### Overview
 The Library Management System is a robust RESTful API built to demonstrate the power of Spring Data JPA and Object-Relational Mapping (ORM). Unlike the previous in-memory system, this project persists data using an H2 SQL database, managing complex relationships between Authors, Books, and Publishers.
 
