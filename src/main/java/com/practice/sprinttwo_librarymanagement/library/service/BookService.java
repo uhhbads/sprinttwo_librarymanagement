@@ -5,10 +5,14 @@ import com.practice.sprinttwo_librarymanagement.library.dto.BookResponse;
 import com.practice.sprinttwo_librarymanagement.library.entity.Author;
 import com.practice.sprinttwo_librarymanagement.library.entity.Book;
 import com.practice.sprinttwo_librarymanagement.library.repository.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,8 +25,9 @@ public class BookService {
         this.authorService = authorService;
     }
 
+    @Transactional
     public Book createBook(BookRequest bookRequest){
-        Author author = authorService.getAuthorById(bookRequest.getAuthorId());
+        Author author = authorService.getAuthorEntityById(bookRequest.getAuthorId());
         Book book = new Book(
                 bookRequest.getTitle(),
                 bookRequest.getIsbn(),
@@ -31,11 +36,31 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public List<BookResponse> getAllBooks() {
-        return bookRepository.findAll()
-                .stream()
+    public List<BookResponse> getAllBooks(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Book> booksPage = bookRepository.findAll(pageable);
+
+        return booksPage.stream()
                 .map(this::mapToBookResponse)
-                .toList();
+                .collect(Collectors.toList());
+    }
+
+    public List<BookResponse> getBooksByAuthor(Long authorId, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Book> booksPage = bookRepository.findByAuthorId(authorId, pageable);
+
+        return booksPage.stream()
+                .map(this::mapToBookResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<BookResponse> searchBooks(String title, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Book> booksPage = bookRepository.findByTitleContainingIgnoreCase(title, pageable);
+
+        return booksPage.stream()
+                .map(this::mapToBookResponse)
+                .collect(Collectors.toList());
     }
 
     private BookResponse mapToBookResponse(Book book) {
@@ -50,13 +75,5 @@ public class BookService {
         );
 
         return response;
-    }
-
-    public List<Book> getBooksByAuthor(Long authorId){
-        return bookRepository.findByAuthorId(authorId);
-    }
-
-    public List<Book> searchBooks(String title){
-        return bookRepository.findByTitleContainingIgnoreCase(title);
     }
 }

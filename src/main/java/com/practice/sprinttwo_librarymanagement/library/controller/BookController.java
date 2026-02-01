@@ -31,24 +31,27 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookResponse> getAllBooks(){
-        return bookService.getAllBooks();
+    public List<BookResponse> getAllBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        return bookService.getAllBooks(page, size);
     }
 
     @GetMapping("/author/{authorId}")
-    public List<BookResponse> getBooksByAuthor(@PathVariable Long authorId){
-        return bookService.getBooksByAuthor(authorId)
-                .stream()
-                .map(this::mapToBookResponse)
-                .toList();
+    public List<BookResponse> getBooksByAuthor(
+            @PathVariable Long authorId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        return bookService.getBooksByAuthor(authorId, page, size);
     }
 
     @GetMapping("/search")
-    public List<BookResponse> getBooksFromTitle(@RequestParam("title") String title){
-        return bookService.searchBooks(title)
-                .stream()
-                .map(this::mapToBookResponse)
-                .toList();
+    public List<BookResponse> getBooksFromTitle(
+            @RequestParam("title") String title,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        return bookService.searchBooks(title, page, size);
     }
 
     private BookResponse mapToBookResponse(Book book) {

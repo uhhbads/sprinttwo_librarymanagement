@@ -1,11 +1,15 @@
 package com.practice.sprinttwo_librarymanagement.library.repository;
 
 import com.practice.sprinttwo_librarymanagement.library.entity.Book;
+import org.jspecify.annotations.NullMarked;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
+@NullMarked
 public interface BookRepository extends JpaRepository<Book, Long> {
-    List<Book> findByAuthorId(Long authorId);
-    List<Book> findByTitleContainingIgnoreCase(String title);
+    Page<Book> findByAuthorId(Long authorId, Pageable pageable);
+    Page<Book> findByTitleContainingIgnoreCase(String title, Pageable pageable);
+    Page<Book> findAll(Pageable pageable);
+
 }

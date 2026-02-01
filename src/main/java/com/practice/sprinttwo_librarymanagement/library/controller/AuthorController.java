@@ -35,12 +35,14 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<Author> getAllAuthors(){
-        return authorService.getAllAuthors();
+    public List<AuthorResponse> getAllAuthors(
+            @RequestParam(defaultValue = "false") boolean includeBooks
+    ){
+        return authorService.getAllAuthors(includeBooks);
     }
 
     @GetMapping("{id}")
-    public Author getAuthorById(@PathVariable Long id){
-        return authorService.getAuthorById(id);
+    public ResponseEntity<AuthorResponse> getAuthorById(@PathVariable Long id){
+        return ResponseEntity.ok(authorService.getAuthorById(id));
     }
 }

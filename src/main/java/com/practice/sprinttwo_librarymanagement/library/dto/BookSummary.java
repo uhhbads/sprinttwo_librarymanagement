@@ -3,14 +3,12 @@ package com.practice.sprinttwo_librarymanagement.library.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class AuthorResponse {
+public class BookSummary {
     private Long id;
-    private String name;
-    private String country;
-    private List<BookSummary> books;
+    private String title;
+    private String isbn;
+    private Integer publicationYear;
 }
 
