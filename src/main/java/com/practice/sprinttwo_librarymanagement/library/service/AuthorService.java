@@ -21,9 +21,9 @@ public class AuthorService {
     }
 
     @Transactional
-    public void createAuthor(AuthorRequest request){
+    public Author createAuthor(AuthorRequest request){
         Author author = new Author(request.getName(), request.getCountry());
-        authorRepository.save(author);
+        return authorRepository.save(author);
     }
 
     public List<Author> getAllAuthors(){

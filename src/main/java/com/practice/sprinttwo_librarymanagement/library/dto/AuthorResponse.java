@@ -1,15 +1,13 @@
 package com.practice.sprinttwo_librarymanagement.library.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthorRequest {
-    @NotBlank(message = "Name is required")
+public class AuthorResponse {
+    private Long id;
     private String name;
-
-    @NotBlank(message = "Country is required")
     private String country;
 }
+
