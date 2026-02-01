@@ -23,12 +23,7 @@ public class BookController {
     public ResponseEntity<BookResponse> postBook(@RequestBody BookRequest request){
         Book book = bookService.createBook(request);
 
-        BookResponse response = new BookResponse();
-        response.setId(book.getId());
-        response.setTitle(book.getTitle());
-        response.setIsbn(book.getIsbn());
-        response.setPublicationYear(book.getPublicationYear());
-        response.setAuthorName(book.getAuthor().getName());
+        BookResponse response = mapToBookResponse(book);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
