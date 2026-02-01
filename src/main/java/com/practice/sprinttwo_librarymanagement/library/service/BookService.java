@@ -21,14 +21,14 @@ public class BookService {
         this.authorService = authorService;
     }
 
-    public void createBook(BookRequest bookRequest){
+    public Book createBook(BookRequest bookRequest){
         Author author = authorService.getAuthorById(bookRequest.getAuthorId());
         Book book = new Book(
                 bookRequest.getTitle(),
                 bookRequest.getIsbn(),
                 bookRequest.getPublicationYear(),
                 author);
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
     public List<BookResponse> getAllBooks() {

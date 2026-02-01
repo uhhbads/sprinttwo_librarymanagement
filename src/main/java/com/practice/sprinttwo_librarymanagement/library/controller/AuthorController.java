@@ -21,7 +21,7 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorResponse> createAuthor(@RequestBody @Valid AuthorRequest request){
+    public ResponseEntity<AuthorResponse> postAuthor(@RequestBody @Valid AuthorRequest request){
         Author savedAuthor = authorService.createAuthor(request);
 
         AuthorResponse response = new AuthorResponse();
